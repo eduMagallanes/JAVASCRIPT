@@ -169,6 +169,9 @@ function returnFalsyValues(objeto, funcion){
   const resultado = {};
 
   for (const clave in objeto) {
+    //OTRA OPCIÖN: const myRes = Object.keys(objeto).map(item => item);
+    //
+    
     if (objeto.hasOwnProperty(clave)) {
       const valor = objeto[clave];
       if (!funcion(valor)) {
@@ -203,7 +206,7 @@ function fromBytesToFormattedSizeUnits(bytes, numDigits = 3) {
   let unidadesIndex = 0;
 
   while (Math.abs(bytes) >= 1024 && unidadesIndex < arrUnidades.length - 1) {
-    bytes /= 1024;
+    bytes /= 1024;  //MEJORA: no hay que mutar los parámetros de entrada, mejor crear una copia.
     unidadesIndex++;
   }
 
@@ -230,6 +233,7 @@ function toLowercaseKeys(objeto) {
   const nuevoObjeto = {};
 
   for (const clave in objeto) {
+    //Utilizar el object.keys de antes para hacerlo más corto.
     if (objeto.hasOwnProperty(clave)) {
       const valor = objeto[clave];
       nuevoObjeto[clave.toLowerCase()] = valor;
@@ -288,10 +292,9 @@ La función debe tener dos parámetros:
 ⦁	El segundo parámetro es el número de elementos que deben tener los arrays en los que se divida el array original del primer parámetro.
 */
 
-//PRIMERA FORMA: 
 function splitArrayIntoChunks(array, numElem) {
   const arrDivididos = [];
-
+  //NO HAY QUE MUTAR PARÁMETROS DE ENTRADA.
   for(let i = 0; i < array.length; i += numElem){
     arrDivididos.push(array.slice(i, i + numElem)); 
   }
